@@ -59,32 +59,32 @@
     <script>
         const postleitzahlen = {
             "35108": ["Allendorf (Eder)", "Waldeck-Frankenberg"],
-            "35088": ["Battenberg", "Waldeck-Frankenberg (Südliche Gemeinden)"],
-            "59969": ["Bromskirchen", "Waldeck-Frankenberg (Südliche Gemeinden)"],
-            "35099": ["Burgwald", "Waldeck-Frankenberg (Südliche Gemeinden)"],
-            "35110": ["Frankenau", "Waldeck-Frankenberg (Südliche Gemeinden)"],
-            "35066": ["Frankenberg", "Waldeck-Frankenberg (Südliche Gemeinden)"],
-            "35285": ["Gemünden (Wohra)", "Waldeck-Frankenberg (Südliche Gemeinden)"],
-            "35114": ["Haina", "Waldeck-Frankenberg (Südliche Gemeinden)"],
-            "35116": ["Hatzfeld", "Waldeck-Frankenberg (Südliche Gemeinden)"],
-            "35104": ["Lichtenfels", "Waldeck-Frankenberg (Südliche Gemeinden)"],
-            "35119": ["Rosenthal", "Waldeck-Frankenberg (Südliche Gemeinden)"],
-            "34516": ["Vöhl", "Waldeck-Frankenberg (Südliche Gemeinden)"],
-            "34596": ["Bad Zwesten", "Schwalm-Eder (Südliche Gemeinden)"],
-            "34582": ["Borken", "Schwalm-Eder (Südliche Gemeinden)"],
-            "34621": ["Frielendorf", "Schwalm-Eder (Südliche Gemeinden)"],
-            "34630": ["Gilserberg", "Schwalm-Eder (Südliche Gemeinden)"],
-            "34576": ["Homberg/Efze", "Schwalm-Eder (Südliche Gemeinden)"],
-            "34632": ["Jesberg", "Schwalm-Eder (Südliche Gemeinden)"],
-            "34593": ["Knüllwald", "Schwalm-Eder (Südliche Gemeinden)"],
-            "34599": ["Neuental", "Schwalm-Eder (Südliche Gemeinden)"],
-            "34626": ["Neukirchen", "Schwalm-Eder (Südliche Gemeinden)"],
-            "36280": ["Oberaula", "Schwalm-Eder (Südliche Gemeinden)"],
-            "34633": ["Ottrau", "Schwalm-Eder (Südliche Gemeinden)"],
-            "34637": ["Schrecksbach", "Schwalm-Eder (Südliche Gemeinden)"],
-            "34613": ["Schwalmstadt", "Schwalm-Eder (Südliche Gemeinden)"],
-            "34639": ["Schwarzenborn", "Schwalm-Eder (Südliche Gemeinden)"],
-            "34628": ["Willingshausen", "Schwalm-Eder (Südliche Gemeinden)"],
+            "35088": ["Battenberg", "Waldeck-Frankenberg"],
+            "59969": ["Bromskirchen", "Waldeck-Frankenberg"],
+            "35099": ["Burgwald", "Waldeck-Frankenberg"],
+            "35110": ["Frankenau", "Waldeck-Frankenberg"],
+            "35066": ["Frankenberg", "Waldeck-Frankenberg"],
+            "35285": ["Gemünden (Wohra)", "Waldeck-Frankenberg"],
+            "35114": ["Haina", "Waldeck-Frankenberg"],
+            "35116": ["Hatzfeld", "Waldeck-Frankenberg"],
+            "35104": ["Lichtenfels", "Waldeck-Frankenberg"],
+            "35119": ["Rosenthal", "Waldeck-Frankenberg"],
+            "34516": ["Vöhl", "Waldeck-Frankenberg"],
+            "34596": ["Bad Zwesten", "Schwalm-Eder"],
+            "34582": ["Borken", "Schwalm-Eder"],
+            "34621": ["Frielendorf", "Schwalm-Eder"],
+            "34630": ["Gilserberg", "Schwalm-Eder"],
+            "34576": ["Homberg/Efze", "Schwalm-Eder"],
+            "34632": ["Jesberg", "Schwalm-Eder"],
+            "34593": ["Knüllwald", "Schwalm-Eder"],
+            "34599": ["Neuental", "Schwalm-Eder"],
+            "34626": ["Neukirchen", "Schwalm-Eder"],
+            "36280": ["Oberaula", "Schwalm-Eder"],
+            "34633": ["Ottrau", "Schwalm-Eder"],
+            "34637": ["Schrecksbach", "Schwalm-Eder"],
+            "34613": ["Schwalmstadt", "Schwalm-Eder"],
+            "34639": ["Schwarzenborn", "Schwalm-Eder"],
+            "34628": ["Willingshausen", "Schwalm-Eder"],
             "36367": ["Wartenberg", "Vogelsbergkreis"],
             "36369": ["Lautertal", "Vogelsbergkreis"],
             "36358": ["Herbstein", "Vogelsbergkreis"],
@@ -120,11 +120,19 @@
 
             if (postleitzahlen[input]) {
                 const [stadt, landkreis] = postleitzahlen[input];
-                result.innerHTML = `Die Postleitzahl ${input} gehört zu ${stadt}, ${landkreis}. <span class="ja">Ja, das ist unser Einzugsgebiet.</span>`;
+                if (landkreis === "Waldeck-Frankenberg" || landkreis === "Schwalm-Eder") {
+                    result.innerHTML = `Die Postleitzahl ${input} gehört zu ${stadt}, südliche Gemeinden von ${landkreis}. <span class="ja">Ja, das ist unser Einzugsgebiet.</span>`;
+                } else {
+                    result.innerHTML = `Die Postleitzahl ${input} gehört zu ${stadt}, ${landkreis}. <span class="ja">Ja, das ist unser Einzugsgebiet.</span>`;
+                }
             } else if (cities[input.toLowerCase()]) {
                 const plz = cities[input.toLowerCase()];
                 const [stadt, landkreis] = postleitzahlen[plz];
-                result.innerHTML = `Die Stadt ${stadt} mit der Postleitzahl ${plz} gehört zu ${landkreis}. <span class="ja">Ja, das ist unser Einzugsgebiet.</span>`;
+                if (landkreis === "Waldeck-Frankenberg" || landkreis === "Schwalm-Eder") {
+                    result.innerHTML = `Die Stadt ${stadt} mit der Postleitzahl ${plz} gehört zu südliche Gemeinden von ${landkreis}. <span class="ja">Ja, das ist unser Einzugsgebiet.</span>`;
+                } else {
+                    result.innerHTML = `Die Stadt ${stadt} mit der Postleitzahl ${plz} gehört zu ${landkreis}. <span class="ja">Ja, das ist unser Einzugsgebiet.</span>`;
+                }
             } else {
                 const isNumber = /^\d+$/.test(input);
                 if (isNumber) {
