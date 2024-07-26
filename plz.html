@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Einzugsgebiet Überprüfung</title>
+    <style>
+        .ja {
+            font-weight: bold;
+            color: green;
+        }
+        .nein {
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Überprüfen Sie, ob Sie in unserem Einzugsgebiet sind</h1>
+    <form id="checkForm">
+        <label for="input">Postleitzahl oder Stadt eingeben:</label>
+        <input type="text" id="input" name="input" required>
+        <button type="submit">Überprüfen</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+        const postleitzahlen = {
+            "35108": ["Allendorf (Eder)", "Waldeck-Frankenberg"],
+            "35088": ["Battenberg", "Waldeck-Frankenberg (Südliche Gemeinden)"],
+            "59969": ["Bromskirchen", "Waldeck-Frankenberg (Südliche Gemeinden)"],
+            "35099": ["Burgwald", "Waldeck-Frankenberg (Südliche Gemeinden)"],
+            "35110": ["Frankenau", "Waldeck-Frankenberg (Südliche Gemeinden)"],
+            "35066": ["Frankenberg", "Waldeck-Frankenberg (Südliche Gemeinden)"],
+            "35285": ["Gemünden (Wohra)", "Waldeck-Frankenberg (Südliche Gemeinden)"],
+            "35114": ["Haina", "Waldeck-Frankenberg (Südliche Gemeinden)"],
+            "35116": ["Hatzfeld", "Waldeck-Frankenberg (Südliche Gemeinden)"],
+            "35104": ["Lichtenfels", "Waldeck-Frankenberg (Südliche Gemeinden)"],
+            "35119": ["Rosenthal", "Waldeck-Frankenberg (Südliche Gemeinden)"],
+            "34516": ["Vöhl", "Waldeck-Frankenberg (Südliche Gemeinden)"],
+            "34596": ["Bad Zwesten", "Schwalm-Eder (Südliche Gemeinden)"],
+            "34582": ["Borken", "Schwalm-Eder (Südliche Gemeinden)"],
+            "34621": ["Frielendorf", "Schwalm-Eder (Südliche Gemeinden)"],
+            "34630": ["Gilserberg", "Schwalm-Eder (Südliche Gemeinden)"],
+            "34576": ["Homberg/Efze", "Schwalm-Eder (Südliche Gemeinden)"],
+            "34632": ["Jesberg", "Schwalm-Eder (Südliche Gemeinden)"],
+            "34593": ["Knüllwald", "Schwalm-Eder (Südliche Gemeinden)"],
+            "34599": ["Neuental", "Schwalm-Eder (Südliche Gemeinden)"],
+            "34626": ["Neukirchen", "Schwalm-Eder (Südliche Gemeinden)"],
+            "36280": ["Oberaula", "Schwalm-Eder (Südliche Gemeinden)"],
+            "34633": ["Ottrau", "Schwalm-Eder (Südliche Gemeinden)"],
+            "34637": ["Schrecksbach", "Schwalm-Eder (Südliche Gemeinden)"],
+            "34613": ["Schwalmstadt", "Schwalm-Eder (Südliche Gemeinden)"],
+            "34639": ["Schwarzenborn", "Schwalm-Eder (Südliche Gemeinden)"],
+            "34628": ["Willingshausen", "Schwalm-Eder (Südliche Gemeinden)"],
+            "36367": ["Wartenberg", "Vogelsbergkreis"],
+            "36369": ["Lautertal", "Vogelsbergkreis"],
+            "36358": ["Herbstein", "Vogelsbergkreis"],
+            "36355": ["Grebenhain", "Vogelsbergkreis"],
+            "36341": ["Lauterbach", "Vogelsbergkreis"],
+            "36329": ["Romrod", "Vogelsbergkreis"],
+            "36326": ["Kirtorf", "Vogelsbergkreis"],
+            "36320": ["Kirtorf", "Vogelsbergkreis"],
+            "36326": ["Antrifttal", "Vogelsbergkreis"],
+            "36325": ["Feldatal", "Vogelsbergkreis"],
+            "36323": ["Grebenau", "Vogelsbergkreis"],
+            "36318": ["Schwalmtal", "Vogelsbergkreis"],
+            "36304": ["Alsfeld", "Vogelsbergkreis"],
+            "36110": ["Schlitz", "Vogelsbergkreis"],
+            "35329": ["Gemünden/Felda", "Vogelsbergkreis"],
+            "35327": ["Ulrichstein", "Vogelsbergkreis"],
+            "35325": ["Mücke", "Vogelsbergkreis"],
+            "35315": ["Homberg (Ohm)", "Vogelsbergkreis"],
+            "63679": ["Schotten", "Vogelsbergkreis"],
+            "36399": ["Freiensteinau", "Vogelsbergkreis"]
+        };
+
+        const cities = Object.keys(postleitzahlen).reduce((acc, plz) => {
+            acc[postleitzahlen[plz][0].toLowerCase()] = plz;
+            return acc;
+        }, {});
+
+        document.getElementById('checkForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const input = document.getElementById('input').value.trim();
+            const result = document.getElementById('result');
+            result.innerHTML = '';
+
+            if (postleitzahlen[input]) {
+                const [stadt, landkreis] = postleitzahlen[input];
+                result.innerHTML = `Die Postleitzahl ${input} gehört zu ${stadt}, ${landkreis}. <span class="ja">Ja, das ist unser Einzugsgebiet.</span>`;
+            } else if (cities[input.toLowerCase()]) {
+                const plz = cities[input.toLowerCase()];
+                const [stadt, landkreis] = postleitzahlen[plz];
+                result.innerHTML = `Die Stadt ${stadt} mit der Postleitzahl ${plz} gehört zu ${landkreis}. <span class="ja">Ja, das ist unser Einzugsgebiet.</span>`;
+            } else {
+                result.innerHTML = `Die Eingabe ${input} liegt nicht in unserem Einzugsgebiet. <span class="nein">Nein, das ist nicht unser Einzugsgebiet.</span>`;
+            }
+        });
+    </script>
+</body>
+</html>
