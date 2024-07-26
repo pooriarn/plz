@@ -8,6 +8,19 @@
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            font-size: 1.5em;
+        }
+        label, input, button, p {
+            font-size: 1.2em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
         }
         .ja {
             font-weight: bold;
@@ -17,18 +30,20 @@
             font-weight: bold;
             color: red;
         }
-        form {
-            margin-bottom: 20px;
-        }
-        input, button {
-            font-size: 1.2em;
-            padding: 10px;
-            margin-top: 10px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        p {
-            font-size: 1.2em;
+        @media (min-width: 600px) {
+            body {
+                max-width: 600px;
+                margin: auto;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            label, input, button, p {
+                font-size: 1.5em;
+            }
+            input, button {
+                padding: 15px;
+            }
         }
     </style>
 </head>
@@ -111,7 +126,12 @@
                 const [stadt, landkreis] = postleitzahlen[plz];
                 result.innerHTML = `Die Stadt ${stadt} mit der Postleitzahl ${plz} gehört zu ${landkreis}. <span class="ja">Ja, das ist unser Einzugsgebiet.</span>`;
             } else {
-                result.innerHTML = `Die Eingabe ${input} liegt nicht in unserem Einzugsgebiet. <span class="nein">Nein, das ist nicht unser Einzugsgebiet.</span>`;
+                const isNumber = /^\d+$/.test(input);
+                if (isNumber) {
+                    result.innerHTML = `<span class="nein">Die Postleitzahl ${input} liegt nicht in unserem Einzugsgebiet.</span>`;
+                } else {
+                    result.innerHTML = `<span class="nein">Die Stadt ${input} liegt nicht in unserem Einzugsgebiet.</span>`;
+                }
             }
         });
     </script>
